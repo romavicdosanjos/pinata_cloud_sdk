@@ -1,39 +1,86 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Pinata Cloud SDK for Dart & Flutter
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+Easily interact with [Pinata Cloud](https://www.pinata.cloud/) from your Dart or Flutter apps. This SDK currently supports:
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+- ✅ Uploading files to IPFS
+- ✅ Creating signed upload URLs
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+> More features like pinning/unpinning, listing files, and metadata management coming soon.
 
-## Features
+---
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+## 📦 Installation
 
-## Getting started
+Add this to your `pubspec.yaml`:
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  pinata_cloud_sdk: ^0.0.1
 ```
 
-## Additional information
+Then run:
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```bash
+flutter pub get
+```
+
+---
+
+## 🚀 Getting Started
+
+```dart
+import 'package:pinata_cloud_sdk/pinata_cloud_sdk.dart';
+
+final sdk = PinataSDK(token: '<YOUR_PINATA_JWT>');
+
+// Upload a file
+final file = File('/path/to/file.png');
+final response = await sdk.upload.uploadFile(
+  file: file,
+  name: 'example.png',
+);
+print(response.cid);
+```
+
+---
+
+## ✍️ Create Signed Upload URL
+
+```dart
+final signedUrl = await sdk.upload.signUpload(
+  date: DateTime.now().millisecondsSinceEpoch,
+  expires: DateTime.now().add(Duration(hours: 1)).millisecondsSinceEpoch,
+  maxFileSize: 5000000,
+  allowMimeTypes: ['image/png', 'image/jpeg'],
+  filename: 'example.png',
+);
+print(signedUrl.data);
+```
+
+---
+
+## 🔐 Authentication
+All requests require a **JWT token** from your Pinata account:
+- [Get a JWT Token](https://app.pinata.cloud/developers/keys)
+
+---
+
+## 📁 Project Structure
+```
+pinata_cloud_sdk/
+├── lib/
+│   ├── pinata_cloud_sdk.dart
+│   └── src/
+│       ├── api/
+│       ├── models/
+│       └── services/
+├── test/
+├── example/
+├── pubspec.yaml
+└── README.md
+```
+
+---
+
+## 📄 License
+MIT © [Romavic dos Anjos](https://github.com/romavicdosanjos)
