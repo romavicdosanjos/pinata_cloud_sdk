@@ -61,7 +61,7 @@ print(signedUrl.data);
 
 ## 🔐 Authentication
 All requests require a **JWT token** from your Pinata account:
-- [Get a JWT Token](https://app.pinata.cloud/developers/keys)
+- [Get a JWT Token](https://app.pinata.cloud/developers/api-keys)
 
 ---
 
